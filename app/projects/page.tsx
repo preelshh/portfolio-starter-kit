@@ -31,12 +31,6 @@ export default function ProjectsPage() {
           <p className="text-sm text-neutral-400">
             <strong>Tech:</strong> Python, PyTorch, scRNA-seq
           </p>
-          <Link
-            href="/projects/gene-expression"
-            className="inline-block text-sm underline underline-offset-4"
-          >
-            Read case study →
-          </Link>
         </article>
 
         <article className="space-y-2">
@@ -52,9 +46,11 @@ export default function ProjectsPage() {
             <strong>Tech:</strong> Python, scikit-learn, data analysis
           </p>
           <Link
-            href="/projects/political-polarization"
-            className="inline-block text-sm underline underline-offset-4"
-          >
+  href="https://ucladatares.medium.com/the-effect-of-polarization-on-the-us-elections-1306ee2e6acb"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block text-sm underline underline-offset-4"
+>
             Read case study →
           </Link>
         </article>
