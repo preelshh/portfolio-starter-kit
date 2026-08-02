@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>projects — priyal sharma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ─── NAV (matches index.html) ─────────────────────────────────────── -->
+  <header class="site-header">
+    <span class="site-name">priyal sharma</span>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">START</a>
+      <a href="projects.html" class="nav-link active">projects</a>
+      <a href="about.html" class="nav-link">about</a>
+      <a href="#" class="nav-link">extra</a>
+      <a href="#" class="nav-link">nav</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="toggle dark mode">○</button>
+  </header>
+
+  <main class="wrap">
+
+    <div class="easter-egg">
+
+      <!-- hidden notepad, underneath -->
+      <div class="notepad">
+        <p>secret list of more projects i want to work on</p>
+        <p>sisyphus game</p>
+        <p>lamp challenge</p>
+        <p>roblox game</p>
+      </div>
+
+      <!-- terminal on top, covers the notepad -->
+      <section class="terminal">
+
+        <header class="terminal-bar">
+          <span class="tl-dots">
+            <span class="tl-dot red"></span>
+            <span class="tl-dot yellow"></span>
+            <span class="tl-dot green"></span>
+          </span>
+          <span class="tl-title">projects.priyal</span>
+          <span class="tl-prompt">priyal@dev &mdash; -zsh</span>
+        </header>
+
+        <div class="terminal-body">
+
+          <div class="prompt-line">
+            <span class="prompt-chevron">&gt;</span>
+            <span class="prompt-text">ls ./projects</span>
+          </div>
+
+          <div class="projects-grid">
+
+            <!-- CARD 1 -->
+            <article class="project-card">
+              <div class="card-image">
+                <img src="SCR-20260802-eauk.png" alt="attempt1000">
+              </div>
+              <div class="card-body">
+                <header class="card-head">
+                  <h2>attempt1000</h2>
+                  <span class="card-date">aug 2026</span>
+                </header>
+                <p class="card-desc">
+                  This is my exploration in building a BERT-style transformer from scratch, with a twist. Still in
+                  progress;
+                  reading around to sharpen the approach.
+                </p>
+                <ul class="card-tags">
+                  <li>python</li>
+                  <li>ML</li>
+                  <li>disturbing</li>
+                </ul>
+                <ul class="card-links">
+                  <li><a href="https://attemptno999.netlify.app/">link &rarr;</a></li>
+
+                </ul>
+              </div>
+            </article>
+
+            <!-- CARD 2 -->
+            <article class="project-card">
+              <div class="card-image no-image">
+                <img src="haikyuu.jpeg" alt="besthaikyuuquote">
+              </div>
+              <div class="card-body">
+                <header class="card-head">
+                  <h2>ApexBall</h2>
+                  <span class="card-date">july 2026</span>
+                </header>
+                <p class="card-desc">
+                  Let’s play volleyball! This is inspired from when I was watching Haikyuu. The trajectory of the
+                  volleyball is determined by a neural net with a Gaussian output head to introduce stochasticity. It
+                  was
+                  fun.
+                </p>
+                <ul class="card-tags">
+                  <li>python</li>
+                  <li>ML</li>
+                  <li>game</li>
+                </ul>
+                <ul class="card-links">
+                  <li><a href="https://github.com/preelshh/apexball"><u>github</u> </a></li>
+                  <li><a href="https://illfatedencounter.substack.com/p/a-gaussian-game?r=8uc082"><u>article</u> </a>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="card-image no-image">
+                <img src="SCR-20260802-eliq.png" alt="mefr">
+
+              </div>
+              <div class="card-body">
+                <header class="card-head">
+                  <h2>Billionaire Burglary</h2>
+                  <span class="card-date">mar 2026</span>
+                </header>
+                <p class="card-desc">
+                  This is a bit of a gag game a couple peers and I made at UCLA ACM Studio. The disorienting
+                  physics...and
+                  mismatched artstyle.. it's all part of the gamer experience.
+                </p>
+                <ul class="card-tags">
+                  <li>gamedev</li>
+                  <li>unity</li>
+                  <li>C++</li>
+                </ul>
+                <ul class="card-links">
+                  <li><a href="https://camerondhughes.itch.io/billionaire-burglary"><u>github</u></a></li>
+
+                </ul>
+              </div>
+            </article>
+
+            <!-- CARD 3 -->
+            <article class="project-card">
+              <div class="card-image no-image">
+                <img src="physicist.jpg" alt="mefr">
+
+              </div>
+              <div class="card-body">
+                <header class="card-head">
+                  <h2>Using a PINN Model to Model Things</h2>
+                  <span class="card-date">feb 2026</span>
+                </header>
+                <p class="card-desc">
+                  This a physics-informed neural network based off the Bergman minimal model trained to predict
+                  Glucose/Insulin dynamics in a human body. Originated from my Biosystems Modeling class @ UCLA
+                </p>
+                <ul class="card-tags">
+                  <li>ML</li>
+                  <li>bio</li>
+                  <li>school</li>
+                </ul>
+                <ul class="card-links">
+                  <li><a href="https://github.com/preelshh/PINNModel"><u>github</u></a></li>
+
+                </ul>
+              </div>
+            </article>
+
+            <!-- CARD 4 -->
+            <article class="project-card">
+              <div class="card-image">
+                <img src="biologist-2.jpg" alt="mefr">
+              </div>
+              <div class="card-body">
+                <header class="card-head">
+                  <h2>oncoreg</h2>
+                  <span class="card-date">jan 2026</span>
+                </header>
+                <p class="card-desc">
+                  Here, I use GoogleDeepmind's AlphaGenome API to compute the regulatory effects of aggregated genetic
+                  mutations. What an advent.
+                </p>
+                <ul class="card-tags">
+                  <li>ML</li>
+                  <li>bio</li>
+                  <li>coolstuff</li>
+                </ul>
+                <ul class="card-links">
+                  <li><a href="https://github.com/preelshh/oncoreg"><u>github</u> </a></li>
+                </ul>
+              </div>
+            </article>
+
+
+
+
+
+
+          </div>
+          <div class="prompt-line prompt-closing">
+            <span class="prompt-chevron">&gt;</span>
+            <span class="prompt-cursor blink"></span>
+          </div>
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-text">handmade in html/css/js · priyal sharma · 2026</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
