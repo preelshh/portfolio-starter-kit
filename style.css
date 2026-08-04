@@ -572,6 +572,20 @@ body {
   background: var(--bg-box);
 }
 
+.card-image img.banner {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px 12px 0 0;
+  filter: grayscale(100%);
+  transition: filter 0.2s ease;
+}
+
+.banner:hover {
+  filter: grayscale(0%);
+}
+
 .card-image img {
   width: 100%;
   height: 100%;
@@ -752,10 +766,12 @@ body {
 
 .banner {
   width: 100%;
+  filter: grayscale(100%);
+  transition: filter 0.2s ease;
   height: 250px;
   object-fit: cover;
-  display: block;
   border-radius: 12px 12px 0 0;
+
 }
 
 .me-box {
@@ -832,4 +848,89 @@ br-lg {
   border-top: 1px solid var(--border);
   margin: 1.5rem 0;
   opacity: 0.5;
+}
+
+/* ─── ABOUT PAGE GALLERY ─── */
+.about-gallery {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.about-gallery img {
+  flex: 1;
+  width: 100%;
+  height: 179px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  filter: grayscale(100%);
+  transition: filter 0.2s ease;
+}
+
+.about-gallery img:hover {
+  filter: grayscale(0%);
+}
+
+/* ─── LEGO PAGE GRID ─── */
+.lego-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.lego-card {
+  width: 300px;
+  background: var(--bg-box);
+  border: 1px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.lego-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--shadow);
+}
+
+.lego-card img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--border);
+  filter: grayscale(100%);
+  transition: filter 0.2s ease;
+}
+
+.lego-card img:hover {
+  filter: grayscale(0%);
+}
+
+.lego-card-info {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lego-card-info h3 {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.lego-tag {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  color: var(--text-subtle);
+  width: fit-content;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
 }
