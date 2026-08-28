@@ -205,6 +205,17 @@ body {
   color: var(--text-subtle);
 }
 
+.ghost-text {
+  color: transparent;
+  transition: color 0.3s ease;
+  cursor: default;
+}
+
+.ghost-text:hover {
+  color: #888;
+}
+
+
 .link {
   text-decoration: underline;
   text-underline-offset: 2px;
