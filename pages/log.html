@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>log, priyal sharma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .log-wrap {
+      max-width: 960px;
+      margin: 60px auto 80px;
+      padding: 0 1.5rem;
+    }
+
+    .log-box {
+      background: white;
+      padding: 36px 40px 44px;
+    }
+
+    [data-theme="dark"] .log-box {
+      background: var(--bg-box);
+    }
+
+    .log-title {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 2.5rem;
+      color: var(--text);
+    }
+
+    .log-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .log-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 400px) {
+      .log-grid { grid-template-columns: 1fr; }
+      .log-box { padding: 24px 20px 32px; }
+    }
+
+    .log-category h2 {
+      display: table;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      color: var(--text);
+      margin-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.3rem;
+    }
+
+    .log-category ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .log-category li {
+      font-size: 12.5px;
+      color: var(--text-subtle);
+      line-height: 1.5;
+    }
+
+    .log-category li::before {
+      content: '› ';
+      color: var(--border);
+    }
+
+    .log-category li.more {
+      font-style: italic;
+      color: var(--border);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <span class="site-name">priyal sharma</span>
+    <nav class="site-nav">
+      <a href="../index.html" class="nav-link">start</a>
+      <a href="projects.html" class="nav-link">projects</a>
+      <a href="about.html" class="nav-link">about</a>
+      <a href="extra.html" class="nav-link active">extra</a>
+      <a href="#" class="nav-link">nav</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="toggle dark mode">&#9675;</button>
+  </header>
+
+  <div class="log-wrap">
+    <div class="log-box">
+      <p class="log-title">media log, everything i've consumed</p>
+      <div class="log-grid">
+
+        <!-- TV / SHOWS (includes anime) — full width 3 cols -->
+        <div class="log-category">
+          <h2>tv shows</h2>
+          <ul>
+            <li>Adventure Time</li>
+            <li>Aikatsu</li>
+            <li>Amazing World of Gumball</li>
+            <li>Arcane</li>
+            <li>Assassination Classroom</li>
+            <li>Attack on Titan</li>
+            <li>Avatar: The Last Airbender</li>
+            <li>Baby Reindeer</li>
+            <li>Beastars</li>
+            <li>Bee and Puppycat</li>
+            <li>Black Mirror</li>
+            <li>Bojack Horseman</li>
+            <li>Bridgerton</li>
+            <li>Business Proposal</li>
+            <li>Chainsaw Man</li>
+            <li>Community</li>
+            <li>Courage the Cowardly Dog</li>
+            <li>Crash Landing on You</li>
+            <li>Dandadan</li>
+            <li>Death Note</li>
+            <li>Doctor Who (2005)</li>
+            <li>Family Guy</li>
+            <li>Friends</li>
+            <li>Fullmetal Alchemist: Brotherhood</li>
+            <li>Girl from Nowhere</li>
+            <li>Given</li>
+            <li>Gossip Girl</li>
+            <li>Gravity Falls</li>
+            <li>Great Pretender</li>
+            <li>Grey's Anatomy</li>
+            <li>Haikyuu</li>
+            <li>Hometown Cha-Cha-Cha</li>
+            <li>House M.D.</li>
+            <li>Hunter x Hunter</li>
+            <li>Inside Job</li>
+            <li>Jujutsu Kaisen</li>
+            <li>Kotaro Lives Alone</li>
+            <li>Last of Us</li>
+            <li>Mindhunter</li>
+            <li>Mob Psycho 100</li>
+            <li>Moral Orel</li>
+            <li>My Hero Academia</li>
+            <li>Neon Genesis Evangelion</li>
+            <li>One Punch Man</li>
+            <li>Orange</li>
+            <li>Ouran High School Host Club</li>
+            <li>Parks and Recreation</li>
+            <li>Parasyte: The Maxim</li>
+            <li>Queen's Gambit</li>
+            <li>Regular Show</li>
+            <li>Reply 1988</li>
+            <li>See You in My 19th Life</li>
+            <li>Shameless</li>
+            <li>Smiling Friends</li>
+            <li>South Park</li>
+            <li>Spy x Family</li>
+            <li>Squid Game</li>
+            <li>Steven Universe</li>
+            <li>Stranger Things</li>
+            <li>Succession</li>
+            <li>Suits</li>
+            <li>The Office</li>
+            <li>The Summer Hikaru Died</li>
+            <li>The Wire</li>
+            <li>Thirteen Reasons Why</li>
+            <li>Vinland Saga</li>
+            <li>When Life Gives You Tangerines</li>
+            <li>25/21</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+        <!-- MOVIES — spans 2 cols -->
+        <div class="log-category">
+          <h2>movies</h2>
+          <ul>
+            <li>Akira</li>
+            <li>Barbie</li>
+            <li>Cars</li>
+            <li>Challengers</li>
+            <li>Chennai Express</li>
+            <li>Coco</li>
+            <li>Despicable Me</li>
+            <li>Devil Wears Prada 2</li>
+            <li>Dhurander 2</li>
+            <li>Everything Everywhere All at Once</li>
+            <li>Finding Nemo</li>
+            <li>Ice Age</li>
+            <li>Inception</li>
+            <li>Jersey</li>
+            <li>Kung Fu Panda</li>
+            <li>Look Back</li>
+            <li>Marty Supreme</li>
+            <li>Midsommar</li>
+            <li>Mulan</li>
+            <li>Parasite</li>
+            <li>Past Lives</li>
+            <li>Ponyo</li>
+            <li>Princess and the Frog</li>
+            <li>Princess Mononoke</li>
+            <li>Raazi</li>
+            <li>Ratatouille</li>
+            <li>Serena</li>
+            <li>Shutter Island</li>
+            <li>Spider-Man (series)</li>
+            <li>Student of the Year</li>
+            <li>Howl's Moving Castle</li>
+            <li>My Neighbor Totoro</li>
+            <li>Nausicaa of the Valley of the Wind</li>
+            <li>Spirited Away</li>
+            <li>Tangled</li>
+            <li>The Substance</li>
+            <li>The Wind Rises</li>
+            <li>Toy Story</li>
+            <li>Up</li>
+            <li>WALL-E</li>
+            <li>Zootopia</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+        <!-- MANGA / MANHWA / WEBTOON -->
+        <div class="log-category">
+          <h2>manga / manhwa / webtoon</h2>
+          <ul>
+            <li>Bastard</li>
+            <li>Hand Jumper</li>
+            <li>I'll Give You the Most Rotten One</li>
+            <li>Liar Game</li>
+            <li>Odd Girl Out</li>
+            <li>Olgami</li>
+            <li>Muse on Fame</li>
+            <li>One Piece</li>
+            <li>Proof of Dignity</li>
+            <li>Pyramid Game</li>
+            <li>See You in My 19th Life</li>
+            <li>Serena</li>
+            <li>Trash Belongs in the Trash Can</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+        <!-- BOOKS -->
+        <div class="log-category">
+          <h2>books</h2>
+          <ul>
+            <li>Beloved, Toni Morrison</li>
+            <li>Catcher in the Rye</li>
+            <li>Great Gatsby</li>
+            <li>Hamlet</li>
+            <li>Harry Potter (series)</li>
+            <li>Hunger Games (series)</li>
+            <li>King Lear</li>
+            <li>Percy Jackson (series)</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+        <!-- MUSICALS -->
+        <div class="log-category">
+          <h2>musicals</h2>
+          <ul>
+            <li>Chicago</li>
+            <li>Epic: The Musical</li>
+            <li>Great Gatsby</li>
+            <li>Hadestown</li>
+            <li>Hamilton</li>
+            <li>Heathers</li>
+            <li>Mean Girls</li>
+            <li>Waitress</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+        <!-- VIDEOGAMES — wide 2 cols -->
+        <div class="log-category">
+          <h2>videogames</h2>
+          <ul>
+            <li>Ace Attorney</li>
+            <li>Animal Crossing</li>
+            <li>Ann</li>
+            <li>Bad End Theater</li>
+            <li>Deltarune</li>
+            <li>Detroit: Become Human</li>
+            <li>Doki Doki Literature Club</li>
+            <li>End Roll</li>
+            <li>FAITH: The Unholy Trinity</li>
+            <li>Five Nights at Freddy's</li>
+            <li>Hello Charlotte (1, 2, 3)</li>
+            <li>Just Dance 4</li>
+            <li>Lara Croft: Rise of the Tomb Raider</li>
+            <li>Legend of Zelda: Breath of the Wild</li>
+            <li>LISA</li>
+            <li>Little Nightmares</li>
+            <li>Mario Kart</li>
+            <li>Minecraft</li>
+            <li>Milk Outside a Bag of Milk Outside a Bag</li>
+            <li>Mouthwashing</li>
+            <li>Night in the Woods</li>
+            <li>OFF</li>
+            <li>Omori</li>
+            <li>Oneshot</li>
+            <li>Red Dead Redemption 2</li>
+            <li>Sims 4</li>
+            <li>Stardew Valley</li>
+            <li>Super Smash Bros</li>
+            <li>To the Moon</li>
+            <li>Tomorrow Won't Come for Those Who (Repaint Their Walls)</li>
+            <li>Undertale</li>
+            <li>What Remains of Edith Finch</li>
+            <li>Wii Sports</li>
+            <li>You Will (Not) Remain</li>
+            <li>Yume Nikki</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+        <!-- ANALOG HORROR / ARGS -->
+        <div class="log-category">
+          <h2>analog horror / args</h2>
+          <ul>
+            <li>Mandela Catalogue</li>
+            <li>Petscop</li>
+            <li class="more">and many more</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-text">handmade in html/css/js &middot; priyal sharma &middot; 2026</span>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+
+</body>
+
+</html>

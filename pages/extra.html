@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>extra, priyal sharma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .extra-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 1.5rem 60px;
+      flex: 1;
+    }
+
+    .extra-box {
+      background: white;
+      width: 480px;
+      padding: 40px 44px 44px;
+    }
+
+    [data-theme="dark"] .extra-box {
+      background: var(--bg-box);
+    }
+
+    .extra-heading {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .extra-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .extra-section-label {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .extra-sub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-top: 0.2rem;
+      padding-left: 1rem;
+    }
+
+    .extra-item {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+
+    .extra-item:hover {
+      color: var(--text);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <span class="site-name">priyal sharma</span>
+    <nav class="site-nav">
+      <a href="../index.html" class="nav-link">start</a>
+      <a href="projects.html" class="nav-link">projects</a>
+      <a href="about.html" class="nav-link">about</a>
+      <a href="extra.html" class="nav-link active">extra</a>
+      <a href="#" class="nav-link">nav</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="toggle dark mode">&#9675;</button>
+  </header>
+
+  <div class="extra-wrap">
+    <div class="extra-box">
+      <p class="extra-heading">extra</p>
+      <nav class="extra-list">
+        <div>
+          <a href="log.html" class="extra-item">media log + review</a>
+          <div class="extra-sub-list">
+            <a href="writings.html" class="extra-item">what i think constitutes good writing</a>
+          </div>
+        </div>
+        <a href="#" class="extra-item">nonfictional analysis and commentary</a>
+      </nav>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-text">handmade in html/css/js &middot; priyal sharma &middot; 2026</span>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+
+</body>
+
+</html>
