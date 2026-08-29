@@ -2,145 +2,439 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>priyal sharma</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta charset="UTF-8">
+  <title>vLLM Inference Benchmarking: Prefix Caching & Batch Size Sweep</title>
+
+  <style>
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      max-width: 780px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #1a1a1a;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      border-bottom: 2px solid #333;
+      padding-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.3em;
+      margin-top: 2em;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 1.05em;
+      margin-top: 1.5em;
+    }
+
+    code,
+    .formula {
+      font-family: 'Courier New', monospace;
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 14px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    .motivation {
+      font-style: italic;
+      color: #333;
+    }
+
+    ol,
+    ul {
+      padding-left: 1.4em;
+    }
+  </style>
 </head>
 
 <body>
 
-
-  <header class="site-header">
-    <span class="site-name">priyal sharma</span>
-    <nav class="site-nav">
-      <a href="../index.html" class="nav-link active">start</a>
-      <a href="projects.html" class="nav-link">projects</a>
-      <a href="about.html" class="nav-link">about</a>
-      <a href="extra.html" class="nav-link">extra</a>
-      <a href="#" class="nav-link">nav</a>
-    </nav>
-    <button class="theme-toggle" id="themeToggle" aria-label="toggle dark mode">○</button>
-  </header>
-
-  <!-- main grid -->
-  <main class="layout">
-
-    <!-- left intro box -->
-    <div class="left-col">
-
-      <section class="box about-box">
-        <h2 class="box-title">welcome</h2>
-        <p>Hi, I'm Priyal.</p>
-        <p>
-          I'm an undergraduate at UCLA studying Statistics &amp; Data Science
-          with a minor in Data Engineering.
-        </p>
-        <p>
-          <strong> This is a place for me to share my techincal projects and personal interests. </strong>
-        </p>
-        <p class="subtle ghost-text">
-          <em>I also exist in this impossibly huge system for a brief moment before disappearing</em>
-        </p>
-      </section>
-
-      <div class="bottom-row">
-        <section class="box currently-box">
-          <h2 class="box-title">recently</h2>
-
-          <div class="focus-entry">
-            <span class="focus-role">
-              Research @ <a href="https://collerlab.dgsom.ucla.edu/" class="link" target="_blank" rel="noopener">Coller
-                Lab</a>
-            </span>
-            <span class="focus-detail">spinning up a manuscript</span>
-          </div>
+  <h1>vLLM Inference Benchmarking: Prefix Caching & Batch Size Sweep</h1>
 
 
-          <div class="focus-entry">
-            <span class="focus-role">MLE @ Nike</span>
-            <span class="focus-detail">was working on multi-behavioral sequential modeling</span>
-          </div>
+  <p>
+    This documentation is fairly thorough, simply because I wanted to take the
+    time to practice writing about the internals of transformer systems. The
+    README for this project is much shorter and objective.
+  </p>
 
+  <h2>Tokenization and Embedding</h2>
 
+  <p>
+    The input text fed into an LLM first goes through a process known as
+    <strong>tokenization</strong>.
+  </p>
 
-        </section>
+  <p>
+    For example, "stemming" is a known facet of tokenization, in which a word
+    like <code>running</code> gets reduced to <code>run</code>.
+  </p>
 
-        <section class="box contact-box">
-          <h2 class="box-title">more info</h2>
-          <ul class="contact-list">
-            <li><a href="assets/Sharma_Priyal_Resume.pdf" class="link"> ▤ resume</a></li>
-            <li><a href="mailto:priyalsh@g.ucla.edu" class="link">✉ email</a></li>
-            <li><a href="https://github.com/preelshh" class="link" target="_blank" rel="noopener">⌥ github</a></li>
-            <!-- TODO: real URL -->
-            <li><a href="https://www.linkedin.com/in/priyalsh/" class="link" target="_blank" rel="noopener">↗
-                linkedin</a></li>
-            <!-- TODO: real URL -->
-            <li><a href="https://twitter.com/priyal" class="link" target="_blank" rel="noopener">𝕏 twitter</a></li>
-            <!-- TODO: real URL -->
-          </ul>
-        </section>
-      </div>
+  <p>
+    After the input text is split into tokens, each token is mapped to a
+    specific integer ID, then looked up in an embedding table. This
+    <strong>embedding</strong> can be thought of as the model's initial,
+    standalone interpretation of the word, similar to looking up its definition
+    in a dictionary, but in the model's internal vector space.
+  </p>
 
+  <p>
+    This embedding is a high-dimensional vector, in this case 3,584 dimensions.
+  </p>
 
+  <p>
+    The encoded input is then passed into the transformer architecture itself.
+    This project uses Qwen2.5-7B: a causal, decoder-only transformer.
+  </p>
 
-    </div><!-- /left-col -->
+  <h2>The 28 Decoder Layers</h2>
 
-    <!-- right col [calendar, site updates] -->
-    <div class="right-col">
+  <p>
+    Each of the 28 layers performs exactly two operations, in sequence:
+  </p>
 
-      <section class="box calendar-box">
-        <div class="cal-header" id="calHeader"><!-- filled by JS --></div>
-        <div class="cal-grid" id="calGrid"><!-- filled by JS --></div>
-      </section>
+  <h3>1. Attention</h3>
 
-      <section class="box activity-box">
-        <h2 class="box-title">site updates</h2>
-        <ul class="activity-list">
-          <li class="activity-item">
-            <span class="activity-date">2026-08-02</span>
-            <span class="activity-text">drafted projects page ✦</span>
-          </li>
-          <li class="activity-item">
-            <span class="activity-date">2026-04-19</span>
-            <span class="activity-text">dark mode toggle + dotted bg finalized </span>
-          </li>
-          <li class="activity-item">
-            <span class="activity-date">2026-04-16</span>
-            <span class="activity-text">fixed nav alignment, tuned box shadows</span>
-          </li>
-          <li class="activity-item">
-            <span class="activity-date">2026-04-12</span>
-            <span class="activity-text">added calendar and contact sections</span>
-          </li>
-          <li class="activity-item">
-            <span class="activity-date">2026-04-08</span>
-            <span class="activity-text">set up /projects and /about directories</span>
-          </li>
-          <li class="activity-item">
-            <span class="activity-date">2026-04-05</span>
-            <span class="activity-text">site initialized — first commit</span>
-          </li>
-        </ul>
-      </section>
+  <p>
+    The goal of attention is to examine every token, determine which other
+    tokens are relevant to it, and pull information from those tokens
+    proportionally to how relevant they are.
+  </p>
 
-    </div><!-- /right-col -->
+  <p>
+    This is done by taking each token's vector (3,584 numbers) and projecting it
+    into three separate vectors, via three separate learned weight matrices:
+  </p>
 
-  </main>
+  <ol>
+    <li><strong>Query (Q)</strong> — "what am I looking for?"</li>
+    <li><strong>Key (K)</strong> — "what do I contain, that other tokens might want?"</li>
+    <li><strong>Value (V)</strong> — "what information do I actually hand over, if I'm picked?"</li>
+  </ol>
 
-  <!--  footer -->
-  <footer class="site-footer">
-    <span class="footer-text">handmade in html/css/js · priyal sharma · 2026</span>
-  </footer>
+  <p>The concrete sequence of one token figuring out what to attend to:</p>
 
-  <script src="script.js"></script>
+  <ol>
+    <li>
+      <strong>Compare its Query against every other token's Key.</strong> This
+      is done via a dot product, multiplying matching numbers together and
+      summing them. In linear algebra, a dot product encodes similarity: a
+      high dot product signals "this Key strongly matches what I'm looking
+      for." After this step, the token has a raw relevance score against every
+      preceding token.
+      <br><br>
+      Within this step, right after Q and K are computed and before the dot
+      product comparison happens, each Q vector and each K vector are rotated
+      by an angle determined by that token's position in the sequence. V is
+      left untouched. (This is RoPE — Rotary Position Embedding.)
+    </li>
+    <li>
+      <strong>Convert those scores into a probability distribution via
+        softmax.</strong> The raw, unbounded scores become clean probabilities,
+      e.g. "80% on token 3, 15% on token 7," and so on.
+    </li>
+    <li>
+      <strong>Blend the Value vectors using those weights.</strong> Every
+      other token's Value vector is scaled by its attention weight from step
+      2, then summed. The result is a new vector — the token's attention
+      output, built as a weighted mixture of information pulled from the
+      tokens it decided were relevant.
+    </li>
+  </ol>
 
+  <p>This whole mechanism is captured in one line:</p>
 
-  <!-- TODO: add a resume button -->
+  <div class="formula">Attention(Q, K, V) = softmax(QK&#7488; / &radic;d) &middot; V</div>
+
+  <p>
+    This doesn't happen just once — it runs in parallel across several heads.
+    Qwen breaks from the usual 1-to-1 head matching: there are 28 query heads,
+    but only 4 key/value heads. Every token still produces 28 separate Query
+    projections, but those query heads are split into 4 groups of 7, and all 7
+    query heads within a group share the same Key and Value vectors. This is
+    Grouped-Query Attention (GQA) — understanding this mechanism carefully
+    matters, since it's central to this whole project.
+  </p>
+
+  <h3>2. Feedforward Block</h3>
+
+  <p>
+    Feedforward takes one token's vector and transforms it in place, without
+    involving any other tokens. It's a two-layer network, though in Qwen's
+    SwiGLU version there are actually three weight matrices, not two:
+  </p>
+
+  <ol>
+    <li><strong>Up-projection</strong> — expands the vector from 3,584 to a larger intermediate size.</li>
+    <li><strong>Gate projection</strong> — a second, separate weight matrix projects into that same larger size, then
+      passes through a SiLU activation, a smooth function that lets positive values through and suppresses negative
+      ones.</li>
+    <li><strong>Elementwise multiply</strong> — the up-projected vector and the SiLU-activated gate vector are
+      multiplied together, elementwise. The gate vector acts like a set of dials, controlling how much of each
+      up-projected value actually passes through.</li>
+  </ol>
+
+  <p>
+    The result is then multiplied by a third weight matrix, projecting it back
+    down to 3,584 dimensions. Empirically, this gating mechanism lets the
+    network learn more selective, expressive transformations for the same
+    parameter budget.
+  </p>
+
+  <p>
+    As a token's vector passes through the 28 stacked layers, the raw numbers
+    tend to drift, growing very large or shrinking. To counter this, Qwen uses
+    <strong>RMSNorm</strong> as a "reset step" before real computation in each
+    layer, rescaling the numbers back into a consistent, well-behaved range.
+  </p>
+
+  <p>
+    Finally: after the 28th layer and one last RMSNorm, a linear projection maps
+    the 3,584-dimensional vector back up to vocabulary size, producing a
+    probability distribution over every possible next token.
+  </p>
+
+  <h2>The Motivation</h2>
+
+  <p>Consider this question:</p>
+
+  <pre>Glucose is transported into the muscle cell:
+A. via protein transporters called GLUT4.
+B. only in the presence of insulin.
+C. via hexokinase.
+D. via monocarbylic acid transporters.
+Answer: A</pre>
+
+  <p>
+    Chances are this triggers a minor flashback to every multiple-choice test
+    you've ever taken. Notice the shape: the question, four labeled options,
+    then <code>Answer:</code> followed by the correct letter.
+  </p>
+
+  <p>
+    Many eval datasets are built the same way. In particular, MMLU (Massive
+    Multitask Language Understanding) is a multiple-choice benchmark comprised
+    of 57 subjects.
+  </p>
+
+  <p>
+    MMLU, and most eval benchmarks, test the model on hundreds or thousands of
+    separate questions. To keep the test comparable, every single question gets
+    the same five examples in front of it — that consistency is what makes it a
+    controlled benchmark rather than a moving target. For example:
+  </p>
+
+  <pre>[Question 1 + A/B/C/D + "Answer: A"]
+
+[Question 2 + A/B/C/D + "Answer: C"]
+
+[Question 3 + A/B/C/D + "Answer: B"]
+
+[Question 4 + A/B/C/D + "Answer: D"]
+
+[Question 5 + A/B/C/D + "Answer: A"]
+
+Photosynthesis primarily occurs in which part of a plant cell?
+A. Mitochondria
+B. Nucleus
+C. Chloroplast
+D. Ribosome
+Answer:</pre>
+
+  <p>
+    While this repetition is necessary for control and reproducibility, it's
+    computationally wasteful in large benchmarks. The model repeatedly sees the
+    same block of text, computes attention over it token by token, and only
+    then moves on to the actual new information.
+  </p>
+
+  <p>
+    This project tests the usefulness of <strong>prefix caching</strong>. The
+    logic: if two different requests happen to start with the exact same
+    sequence of tokens (e.g. tokens 1 to 800, the fixed 5-shot block), then the
+    K and V vectors for those first 800 tokens will come out identical both
+    times, same input tokens, same model weights.
+  </p>
+
+  <p>
+    Prefix caching keeps the KV cache from the first request around even after
+    that request finishes. When the next request comes in, vLLM checks: does
+    this new prompt start with a token sequence I've already computed? If so,
+    it reuses the cached prefix instead of recomputing it.
+  </p>
+
+  <h2>Experiment Configuration</h2>
+
+  <p>
+    With the motivation for efficiency established, here's the actual
+    experiment. This multiple-choice format is a familiar one, our brains don't
+    stumble over it since it's the same testing format most of us grew up with.
+    With that context, the specific configuration being tested makes more
+    sense.
+  </p>
+
+  <table>
+    <tr>
+      <th>Variable</th>
+      <th>Values tested</th>
+    </tr>
+    <tr>
+      <td><code>--enable-prefix-caching</code></td>
+      <td>on / off</td>
+    </tr>
+    <tr>
+      <td><code>--max-num-seqs</code></td>
+      <td>32, 128, 256</td>
+    </tr>
+    <tr>
+      <td>Prompt order</td>
+      <td>sorted by length / shuffled</td>
+    </tr>
+    <tr>
+      <td>Client concurrency</td>
+      <td>matched to each run's <code>max_num_seqs</code></td>
+    </tr>
+  </table>
+
+  <p>
+    2 &times; 3 &times; 2 = 12 total runs.
+  </p>
+
+  <p>
+    <code>max_num_seqs</code> was tuned alongside caching because, in an initial
+    experiment that didn't use concurrent request handling, caching showed no
+    measurable benefit, not because caching doesn't work, but because with only
+    one request in flight at a time, there was barely any "waiting" for the GPU
+    to fill with useful cached work. Testing multiple <code>max_num_seqs</code>
+    values was necessary to find out where caching's benefit actually shows up
+    across different levels of concurrent load.
+  </p>
+
+  <h2>Results</h2>
+
+  <p>
+    Throughput (req/sec), averaged across sorted/shuffled prompt order, one run
+    per configuration:
+  </p>
+
+  <table>
+    <tr>
+      <th>max_num_seqs</th>
+      <th>caching off</th>
+      <th>caching on</th>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>~282</td>
+      <td>~245</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>~85</td>
+      <td>~353</td>
+    </tr>
+    <tr>
+      <td>256</td>
+      <td>~76</td>
+      <td>~80</td>
+    </tr>
+  </table>
+
+  <p>
+    Accuracy was 0.736&ndash;0.742 in every configuration, essentially unchanged
+    throughout, as expected, since these flags affect serving performance, not
+    model correctness.
+  </p>
+
+  <h3>Findings</h3>
+
+  <ul>
+    <li>
+      Prefix caching gave a large, real throughput improvement (~4x) at
+      <code>max_num_seqs=128</code>, consistent with a measured 97.9% prefix
+      cache hit rate in the server logs at that setting. All 500 requests
+      share the same 5-shot prefix, so this is the regime the optimization is
+      designed for.
+    </li>
+    <li>
+      At <code>max_num_seqs=256</code>, throughput for both caching on and off
+      collapsed to roughly the same low value. This points to GPU memory
+      pressure from holding that many concurrent KV caches becoming the
+      dominant bottleneck, large enough to swamp any benefit from caching.
+    </li>
+    <li>
+      At <code>max_num_seqs=32</code>, caching off actually outperformed
+      caching on. This is the one result that runs against the overall trend,
+      and with only a single run per configuration at low concurrency, it's
+      plausible this specific data point is noise rather than a real effect.
+      It's reported as-is rather than smoothed over.
+    </li>
+    <li>
+      A first attempt at this sweep sent requests sequentially (one at a
+      time), which showed no meaningful difference across any configuration.
+      That result was correct but uninformative: <code>max_num_seqs</code> is
+      a concurrency batching control, so it can't show an effect unless
+      multiple requests are actually in flight at once. The results above come
+      from a rebuilt, concurrent version of the harness.
+    </li>
+  </ul>
+
+  <h3>Known Limitations</h3>
+
+  <ul>
+    <li>
+      Each configuration was run once (per prompt order), not averaged over
+      multiple trials. The 128-seq caching gap is large enough to be a
+      confident result; smaller gaps (notably the 32-seq case) are within the
+      range that run-to-run noise could produce.
+    </li>
+    <li>
+      <code>max_num_seqs=256</code> was not investigated further to find the
+      exact point where throughput starts degrading; the sweep only shows that
+      it happens somewhere between 128 and 256 for this model/GPU combination.
+    </li>
+    <li>
+      Single GPU, single model, single prompt shape (MMLU 5-shot). Results are
+      specific to this setup and shouldn't be generalized to other models or
+      workloads without re-testing.
+    </li>
+  </ul>
+  <p class="motivation">
+    My motivation for beginning this benchmark is to improve my capabilities as a
+    potential research engineer. I believe in science, research, and discovery,
+    and want to use my skills as an engineer to support such avenues.
+  </p>
 </body>
 
 </html>
