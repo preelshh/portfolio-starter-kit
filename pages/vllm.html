@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>priyal sharma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+
+  <header class="site-header">
+    <span class="site-name">priyal sharma</span>
+    <nav class="site-nav">
+      <a href="../index.html" class="nav-link active">start</a>
+      <a href="projects.html" class="nav-link">projects</a>
+      <a href="about.html" class="nav-link">about</a>
+      <a href="extra.html" class="nav-link">extra</a>
+      <a href="#" class="nav-link">nav</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="toggle dark mode">○</button>
+  </header>
+
+  <!-- main grid -->
+  <main class="layout">
+
+    <!-- left intro box -->
+    <div class="left-col">
+
+      <section class="box about-box">
+        <h2 class="box-title">welcome</h2>
+        <p>Hi, I'm Priyal.</p>
+        <p>
+          I'm an undergraduate at UCLA studying Statistics &amp; Data Science
+          with a minor in Data Engineering.
+        </p>
+        <p>
+          <strong> This is a place for me to share my techincal projects and personal interests. </strong>
+        </p>
+        <p class="subtle ghost-text">
+          <em>I also exist in this impossibly huge system for a brief moment before disappearing</em>
+        </p>
+      </section>
+
+      <div class="bottom-row">
+        <section class="box currently-box">
+          <h2 class="box-title">recently</h2>
+
+          <div class="focus-entry">
+            <span class="focus-role">
+              Research @ <a href="https://collerlab.dgsom.ucla.edu/" class="link" target="_blank" rel="noopener">Coller
+                Lab</a>
+            </span>
+            <span class="focus-detail">spinning up a manuscript</span>
+          </div>
+
+
+          <div class="focus-entry">
+            <span class="focus-role">MLE @ Nike</span>
+            <span class="focus-detail">was working on multi-behavioral sequential modeling</span>
+          </div>
+
+
+
+        </section>
+
+        <section class="box contact-box">
+          <h2 class="box-title">more info</h2>
+          <ul class="contact-list">
+            <li><a href="assets/Sharma_Priyal_Resume.pdf" class="link"> ▤ resume</a></li>
+            <li><a href="mailto:priyalsh@g.ucla.edu" class="link">✉ email</a></li>
+            <li><a href="https://github.com/preelshh" class="link" target="_blank" rel="noopener">⌥ github</a></li>
+            <!-- TODO: real URL -->
+            <li><a href="https://www.linkedin.com/in/priyalsh/" class="link" target="_blank" rel="noopener">↗
+                linkedin</a></li>
+            <!-- TODO: real URL -->
+            <li><a href="https://twitter.com/priyal" class="link" target="_blank" rel="noopener">𝕏 twitter</a></li>
+            <!-- TODO: real URL -->
+          </ul>
+        </section>
+      </div>
+
+
+
+    </div><!-- /left-col -->
+
+    <!-- right col [calendar, site updates] -->
+    <div class="right-col">
+
+      <section class="box calendar-box">
+        <div class="cal-header" id="calHeader"><!-- filled by JS --></div>
+        <div class="cal-grid" id="calGrid"><!-- filled by JS --></div>
+      </section>
+
+      <section class="box activity-box">
+        <h2 class="box-title">site updates</h2>
+        <ul class="activity-list">
+          <li class="activity-item">
+            <span class="activity-date">2026-08-02</span>
+            <span class="activity-text">drafted projects page ✦</span>
+          </li>
+          <li class="activity-item">
+            <span class="activity-date">2026-04-19</span>
+            <span class="activity-text">dark mode toggle + dotted bg finalized </span>
+          </li>
+          <li class="activity-item">
+            <span class="activity-date">2026-04-16</span>
+            <span class="activity-text">fixed nav alignment, tuned box shadows</span>
+          </li>
+          <li class="activity-item">
+            <span class="activity-date">2026-04-12</span>
+            <span class="activity-text">added calendar and contact sections</span>
+          </li>
+          <li class="activity-item">
+            <span class="activity-date">2026-04-08</span>
+            <span class="activity-text">set up /projects and /about directories</span>
+          </li>
+          <li class="activity-item">
+            <span class="activity-date">2026-04-05</span>
+            <span class="activity-text">site initialized — first commit</span>
+          </li>
+        </ul>
+      </section>
+
+    </div><!-- /right-col -->
+
+  </main>
+
+  <!--  footer -->
+  <footer class="site-footer">
+    <span class="footer-text">handmade in html/css/js · priyal sharma · 2026</span>
+  </footer>
+
+  <script src="script.js"></script>
+
+
+  <!-- TODO: add a resume button -->
+</body>
+
+</html>
